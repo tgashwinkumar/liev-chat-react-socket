@@ -1,6 +1,10 @@
-# TailwindCSS-React Boilerplate
+# Live-Chat Trial using React-NodeJs-SocketIO
 
-A custom Create-react-app boilerplate with TailwindCSS and PostCSS.
+## Methods
+
+- Created a custom hook ```useChat``` to handle the socket. The socket is stored in useRef so it doesnt reload everytime and thus create a new socket everytime.
+- The senderID is generated with socket and stored in useRef.
+- Then the socket is used to handle events.
 
 ## Scripts used in this project
 
@@ -28,6 +32,6 @@ Module not found: Error: Can't resolve './styles/tailwind.output.css' in '\src'
 
 The output CSS is generated in the /src/styles folder, under the name 'tailwind.output.css'.
 
-### `yarn run start-tw` (from concurrently)
+### `yarn run dev` (from concurrently)
 
-Developers can also run the tailwind watch (yarn run watch-tw)and react start (yarn start) scripts concurrently. Only for development purpose.
+This starts the server in the background that handles the socket.io connection.
