@@ -1,19 +1,19 @@
-
-import { useEffect, useRef, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import socketIOClient from "socket.io-client";
 
 const NEW_CHAT_MESSAGE_EVENT = "chat"; // Name of the event
 const SOCKET_SERVER_URL = "http://localhost:5000";
 
-const useChat = () => {
-  const [messages, setMessages] = useState([]); // Sent and received messages
+export const SocketContext = createContext();
+
+const SocketProvider = ({ children }) => {
   const socketRef = useRef();
+  const [messages, setMessages] = useState([]); // Sent and received messages
 
   useEffect(() => {
-    
     // Creates a WebSocket connection
     socketRef.current = socketIOClient(SOCKET_SERVER_URL);
-    
+
     // Listens for incoming messages
     socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, (message) => {
       const incomingMessage = {
@@ -22,7 +22,7 @@ const useChat = () => {
       };
       setMessages((messages) => [...messages, incomingMessage]);
     });
-    
+
     // Destroys the socket reference
     // when the connection is closed
     return () => {
@@ -39,7 +39,11 @@ const useChat = () => {
     });
   };
 
-  return { messages, sendMessage };
+  return (
+    <SocketContext.Provider value={{ messages, sendMessage }}>
+      {children}
+    </SocketContext.Provider>
+  );
 };
 
-export default useChat;
+export default SocketProvider;

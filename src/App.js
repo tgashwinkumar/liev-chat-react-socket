@@ -1,11 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { SocketContext } from "./SocketProvider";
 import "./styles/tailwind.output.css";
 import useChat from "./useChat";
 
 const App = () => {
   const [broadcastMsg, setbroadcastMsg] = useState("");
-  const { messages, sendMessage } = useChat();
-  const [newMessage, setNewMessage] = React.useState("");
+  const { messages, sendMessage } = useContext(SocketContext);
+  const [newMessage, setNewMessage] = useState("");
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -35,7 +36,10 @@ const App = () => {
             value={newMessage}
             onChange={handleNewMessageChange}
           />
-          <button onClick={e => handleSendMessage(e)} className="bg-blue-500 px-4 py-2 rounded-full text-white h-full">
+          <button
+            onClick={(e) => handleSendMessage(e)}
+            className="bg-blue-500 px-4 py-2 rounded-full text-white h-full"
+          >
             Send
           </button>
         </div>

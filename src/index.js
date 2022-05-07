@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import SocketProvider from './SocketProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SocketProvider>
+      <App />
+    </SocketProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
